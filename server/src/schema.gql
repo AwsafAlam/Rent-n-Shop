@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateProductInput {
+  description: String!
+  price: Int!
+  rent_daily: Int!
+  title: String!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  removeProduct(id: Int!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+}
+
+type Product {
+  description: String!
+  id: Float!
+  price: Float!
+  rent_daily: Float!
+  title: String!
+}
+
+type Query {
+  product(id: Int!): Product!
+  products: [Product!]!
+}
+
+input UpdateProductInput {
+  description: String!
+  id: Int!
+  price: Int!
+  rent_daily: Int!
+  title: String!
+}

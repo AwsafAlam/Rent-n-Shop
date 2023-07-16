@@ -8,55 +8,63 @@ networks:
         - subnet: 172.28.0.0/16
 
 services:
-  lb:
-    image: haproxy
+  db:
+    image: postgres:latest
     ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - ./haproxy/prod:/usr/local/etc/haproxy
-    networks:
-      - bridge_net
-    restart: on-failure
-    healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:80/metrics']
-      interval: 30s
-      timeout: 30s
-      retries: 3
-  web-frontend:
-    image: '${SERVER_API_DOCKER_TAG:-web-dev:latest}'
-    build:
-      context: ./web-frontend
-      target: release
-    command: yarn start
-    env_file:
-      - ./web-frontend/.env
+      - '5432:5432'
     environment:
-      LOAD_ENV: 'true'
-      APPID: 5173
-    ports:
-      - '5173:5173'
-    networks:
-      - bridge_net
-    restart: on-failure
-  server:
-    image: '${SERVER_API_DOCKER_TAG:-api-dev:latest}'
-    build:
-      context: ./server
-      target: release
-    command: yarn start
-    env_file:
-      - ./server/.env
-    environment:
-      LOAD_ENV: 'true'
-      APPID: 3000
-    ports:
-      - '3000:3000'
-    networks:
-      - bridge_net
-    restart: on-failure
-    healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:80/status']
-      interval: 30s
-      timeout: 30s
-      retries: 3
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=randompassword
+      - POSTGRES_DB=rent-n-shop-db
+  # lb:
+  #   image: haproxy
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   volumes:
+  #     - ./haproxy/prod:/usr/local/etc/haproxy
+  #   networks:
+  #     - bridge_net
+  #   restart: on-failure
+  #   healthcheck:
+  #     test: ['CMD', 'curl', '-f', 'http://localhost:80/metrics']
+  #     interval: 30s
+  #     timeout: 30s
+  #     retries: 3
+  # web-frontend:
+  #   image: '${SERVER_API_DOCKER_TAG:-web-dev:latest}'
+  #   build:
+  #     context: ./web-frontend
+  #     target: release
+  #   command: yarn start
+  #   env_file:
+  #     - ./web-frontend/.env
+  #   environment:
+  #     LOAD_ENV: 'true'
+  #     APPID: 5173
+  #   ports:
+  #     - '5173:5173'
+  #   networks:
+  #     - bridge_net
+  #   restart: on-failure
+  # server:
+  #   image: '${SERVER_API_DOCKER_TAG:-api-dev:latest}'
+  #   build:
+  #     context: ./server
+  #     target: release
+  #   command: yarn start
+  #   env_file:
+  #     - ./server/.env
+  #   environment:
+  #     LOAD_ENV: 'true'
+  #     APPID: 3000
+  #   ports:
+  #     - '3000:3000'
+  #   networks:
+  #     - bridge_net
+  #   restart: on-failure
+  #   healthcheck:
+  #     test: ['CMD', 'curl', '-f', 'http://localhost:80/status']
+  #     interval: 30s
+  #     timeout: 30s
+  #     retries: 3
