@@ -8,12 +8,11 @@ export class ProductService {
   constructor(private prisma: PrismaService) {}
 
   create(createProductInput: CreateProductInput) {
-    console.log(createProductInput);
-    const out = this.prisma.product.create({
+    const product = this.prisma.product.create({
       data: createProductInput,
     });
-    console.log(out);
-    return out;
+    console.log(product);
+    return product;
   }
 
   findAll() {

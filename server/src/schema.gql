@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Auth {
+  accessToken: String!
+}
+
+type AuthResponse {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
 input CreateProductInput {
   description: String!
   price: Int!
@@ -11,7 +21,10 @@ input CreateProductInput {
 
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
+  removeAuth(id: Int!): Auth!
   removeProduct(id: Int!): Product!
+  signup(signUpInput: SignupInput!): AuthResponse!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
 }
 
@@ -24,8 +37,26 @@ type Product {
 }
 
 type Query {
+  auth(id: Int!): Auth!
   product(id: Int!): Product!
   products: [Product!]!
+}
+
+input SignupInput {
+  email: String!
+  first_name: String!
+  last_name: String!
+  password: String!
+  phone: String!
+}
+
+input UpdateAuthInput {
+  email: String
+  first_name: String
+  id: Int!
+  last_name: String
+  password: String
+  phone: String
 }
 
 input UpdateProductInput {
@@ -34,4 +65,11 @@ input UpdateProductInput {
   price: Int!
   rent_daily: Int!
   title: String!
+}
+
+type User {
+  email: String!
+  first_name: String!
+  id: Int!
+  last_name: String!
 }
