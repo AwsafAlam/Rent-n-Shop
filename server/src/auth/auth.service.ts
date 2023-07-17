@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { SignupInput } from './dto/signup.input';
 import { UpdateAuthInput } from './dto/update-auth.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
+import { SigninInput } from './dto/signin.input';
 
 @Injectable()
 export class AuthService {
@@ -17,12 +22,17 @@ export class AuthService {
   async signup(signUpInput: SignupInput) {
     // Hash pass
     const hashedPass = await argon.hash(signUpInput.password);
-    const user = await this.prisma.user.create({
-      data: {
-        ...signUpInput,
-        password: hashedPass,
-      },
-    });
+    let user;
+    try {
+      user = await this.prisma.user.create({
+        data: {
+          ...signUpInput,
+          password: hashedPass,
+        },
+      });
+    } catch (error) {
+      throw new BadRequestException('Failed to Register user');
+    }
 
     const { accessToken, refreshToken } = await this.createTokens(
       user.id,
@@ -34,8 +44,31 @@ export class AuthService {
     return { accessToken, refreshToken, user };
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async signin(signInInput: SigninInput) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: signInInput.email,
+      },
+    });
+    if (!user) {
+      throw new ForbiddenException('User does not exist');
+    }
+    const matchPassword = await argon.verify(
+      user.password,
+      signInInput.password,
+    );
+    if (!matchPassword) {
+      throw new ForbiddenException('Wrong Email or Password');
+    }
+
+    const { accessToken, refreshToken } = await this.createTokens(
+      user.id,
+      user.email,
+    );
+
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return { accessToken, refreshToken, user };
   }
 
   findOne(id: number) {

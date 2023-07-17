@@ -19,6 +19,7 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   removeAuth(id: Int!): AuthResponse!
   removeProduct(id: Int!): Product!
+  signin(signInInput: SigninInput!): AuthResponse!
   signup(signUpInput: SignupInput!): AuthResponse!
   updateAuth(updateAuthInput: UpdateAuthInput!): User!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
@@ -36,6 +37,11 @@ type Query {
   auth(id: Int!): AuthResponse!
   product(id: Int!): Product!
   products: [Product!]!
+}
+
+input SigninInput {
+  email: String!
+  password: String!
 }
 
 input SignupInput {
