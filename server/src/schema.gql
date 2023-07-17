@@ -2,10 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Auth {
-  accessToken: String!
-}
-
 type AuthResponse {
   accessToken: String!
   refreshToken: String!
@@ -21,10 +17,10 @@ input CreateProductInput {
 
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
-  removeAuth(id: Int!): Auth!
+  removeAuth(id: Int!): AuthResponse!
   removeProduct(id: Int!): Product!
   signup(signUpInput: SignupInput!): AuthResponse!
-  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  updateAuth(updateAuthInput: UpdateAuthInput!): User!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
 }
 
@@ -37,7 +33,7 @@ type Product {
 }
 
 type Query {
-  auth(id: Int!): Auth!
+  auth(id: Int!): AuthResponse!
   product(id: Int!): Product!
   products: [Product!]!
 }
@@ -52,9 +48,9 @@ input SignupInput {
 
 input UpdateAuthInput {
   email: String
-  first_name: String
+  first_name: String!
   id: Int!
-  last_name: String
+  last_name: String!
   password: String
   phone: String
 }
