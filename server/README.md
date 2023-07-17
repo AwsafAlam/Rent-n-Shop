@@ -70,6 +70,10 @@ Generate product resource:
 
 `nest g resource product`
 
+`nest g service prisma`
+
+`nest g module user`
+
 ## Prisma
 
 `npm i -D prisma`
@@ -103,16 +107,9 @@ Need to be run, everytime we modify a model. to change the schemas
 - `npx prisma migrate dev --name <name_of_migration>`
 - `npx prisma generate`
 
-## Support
+## Database Design
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Several assumptions are made here for modelling the database:
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+1. Each product consists of a single item [we are not considering inventory/stock here] for the sake of simplicity.
+2. Once sold, the same item will not be re-sold.

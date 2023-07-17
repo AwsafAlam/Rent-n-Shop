@@ -11,16 +11,18 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  phone        String
-  password     String
-  first_name   String
-  last_name    String
-  address      String?
-  refreshToken String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
+  id              Int        @id @default(autoincrement())
+  email           String     @unique
+  phone           String
+  password        String
+  first_name      String
+  last_name       String
+  address         String?
+  refreshToken    String?
+  productsCreated Product[]
+  purchases       Purchase[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
 }
 
 model Product {
@@ -31,6 +33,9 @@ model Product {
   rent_daily  Int?
   views       Int        @default(0)
   categories  Category[]
+  purchase    Purchase[]
+  owner       User?      @relation(fields: [ownerId], references: [id])
+  ownerId     Int?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
 }
@@ -39,7 +44,21 @@ model Category {
   id          Int       @id @default(autoincrement())
   name        String
   description String
+  products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now())
-  posts       Product[]
+}
+
+model Purchase {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  price       Int?
+  rent_daily  Int?
+  Product     Product? @relation(fields: [productId], references: [id])
+  productId   Int?
+  customer    User?    @relation(fields: [customerId], references: [id])
+  customerId  Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 }

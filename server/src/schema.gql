@@ -15,14 +15,22 @@ input CreateProductInput {
   title: String!
 }
 
+input CreatePurchaseInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
+  createPurchase(createPurchaseInput: CreatePurchaseInput!): Purchase!
   removeAuth(id: Int!): AuthResponse!
   removeProduct(id: Int!): Product!
+  removePurchase(id: Int!): Purchase!
   signin(signInInput: SigninInput!): AuthResponse!
   signup(signUpInput: SignupInput!): AuthResponse!
   updateAuth(updateAuthInput: UpdateAuthInput!): User!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
+  updatePurchase(updatePurchaseInput: UpdatePurchaseInput!): Purchase!
 }
 
 type Product {
@@ -33,10 +41,16 @@ type Product {
   title: String!
 }
 
+type Purchase {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   auth(id: Int!): AuthResponse!
   product(id: Int!): Product!
   products: [Product!]!
+  purchase(id: Int!): Purchase!
 }
 
 input SigninInput {
@@ -67,6 +81,12 @@ input UpdateProductInput {
   price: Int!
   rent_daily: Int!
   title: String!
+}
+
+input UpdatePurchaseInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 type User {
