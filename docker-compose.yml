@@ -10,12 +10,16 @@ networks:
 services:
   db:
     image: postgres:latest
+    restart: always
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=randompassword
       - POSTGRES_DB=rent-n-shop-db
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+
   # lb:
   #   image: haproxy
   #   ports:

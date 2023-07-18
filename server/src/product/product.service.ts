@@ -11,7 +11,6 @@ export class ProductService {
     const product = this.prisma.product.create({
       data: createProductInput,
     });
-    console.log(product);
     return product;
   }
 
