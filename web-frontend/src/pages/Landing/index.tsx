@@ -1,3 +1,4 @@
+// import React from 'react'
 import TextField from '@mui/material/TextField'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
@@ -8,8 +9,14 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import CustomCard from '@/components/Card'
 import classes from './index.module.css'
+import { useGetProductsQuery } from '@/generated/graphql'
 
 export default function Landing() {
+	const { loading, error, data } = useGetProductsQuery()
+
+	if (loading) return <p>Loading...</p>
+	if (error) return <p>Error : {error.message}</p>
+
 	return (
 		<div>
 			<div className={classes.col1}>
@@ -58,42 +65,18 @@ export default function Landing() {
 				</div>
 			</div>
 			<div className={classes.col2}>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
-				<CustomCard
-					category="Electronics"
-					productName="iPhone pro max"
-					description="This is the description of iPhone pro max"
-					price={2000}
-				/>
+				{data &&
+					data.products.map((item, i) => (
+						<CustomCard
+							key={i}
+							id={item.id}
+							category="Electronics"
+							productName={item.title}
+							description={item.description}
+							price={item.price}
+							rental_price={item.rent_daily}
+						/>
+					))}
 			</div>
 		</div>
 	)

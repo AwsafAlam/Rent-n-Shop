@@ -7,6 +7,7 @@ import classes from './index.module.css'
 import { Product } from '../../types'
 
 export default function CustomCard({
+	id,
 	category,
 	price,
 	description,
@@ -14,7 +15,7 @@ export default function CustomCard({
 }: Product) {
 	return (
 		<Card sx={{ minWidth: 275 }} className={classes.card}>
-			<a href={`/product/10`}>
+			<a href={`/product/${id}`}>
 				<CardContent>
 					<Typography variant="h5">{productName}</Typography>
 					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

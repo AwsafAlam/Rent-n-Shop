@@ -1,0 +1,23 @@
+mutation Signup($input: SignupInput!) {
+	signup(signUpInput: $input) {
+		accessToken
+		refreshToken
+		user {
+			first_name
+			last_name
+			email
+		}
+	}
+}
+
+mutation Signin($input: SigninInput!) {
+	signin(signInInput: $input) {
+		accessToken
+		refreshToken
+		user {
+			first_name
+			last_name
+			email
+		}
+	}
+}

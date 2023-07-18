@@ -1,0 +1,35 @@
+query GetProducts {
+	products {
+		id
+		title
+		description
+		price
+		rent_daily
+	}
+}
+
+query ProductById($input: Int!) {
+	product(id: $input) {
+		id
+		title
+		description
+		price
+		rent_daily
+	}
+}
+
+mutation UpdateProduct($input: UpdateProductInput!) {
+	updateProduct(updateProductInput: $input) {
+		id
+		title
+		description
+		price
+	}
+}
+
+mutation RemoveProduct($input: Int!) {
+	removeProduct(id: $input) {
+		id
+		title
+	}
+}
