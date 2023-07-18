@@ -1,0 +1,43 @@
+.col1,
+.col2 {
+	height: 100%;
+}
+
+.col1 {
+	position: fixed;
+	left: 0;
+	/* top: 0; */
+	top: 10%;
+	width: 20%;
+	height: 100%;
+	border-right: solid 1px gray;
+}
+
+.col2 {
+	margin-left: 20%;
+	overflow: auto;
+	position: fixed;
+	top: 8%;
+	width: 80%;
+	padding: 20px;
+	column-gap: 20px;
+}
+
+.searchContainer {
+	display: flex;
+	flex-direction: column;
+	row-gap: 50px;
+	justify-content: center;
+	align-items: center;
+	margin: 30px;
+}
+
+.title,
+.category,
+.radioContainer {
+	width: 80%;
+}
+
+.radio {
+	align-self: flex-start;
+}
