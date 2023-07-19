@@ -12,7 +12,10 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 
-const pages = ['Products', 'Pricing', 'Blog']
+const pages = [
+	{ name: 'Add Products', url: '/product/add' },
+	{ name: 'Dashboard', url: '/profile' },
+]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 function ResponsiveAppBar() {
@@ -87,8 +90,12 @@ function ResponsiveAppBar() {
 							}}
 						>
 							{pages.map(page => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
-									<Typography textAlign="center">{page}</Typography>
+								<MenuItem key={page.url} onClick={handleCloseNavMenu}>
+									<a href={page.url}>
+										<Typography color="white" textAlign="center">
+											{page.name}
+										</Typography>
+									</a>
 								</MenuItem>
 							))}
 						</Menu>
@@ -115,11 +122,13 @@ function ResponsiveAppBar() {
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{pages.map(page => (
 							<Button
-								key={page}
+								key={page.url}
 								onClick={handleCloseNavMenu}
 								sx={{ my: 2, color: 'white', display: 'block' }}
 							>
-								{page}
+								<a style={{ color: 'white' }} href={page.url}>
+									{page.name}
+								</a>
 							</Button>
 						))}
 					</Box>

@@ -1,5 +1,5 @@
 # Base image
-FROM node:18
+FROM node:18 AS release
 
 # Create app directory
 WORKDIR /server

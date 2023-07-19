@@ -1,12 +1,12 @@
-FROM node:18-alpine
+FROM node:18 AS release
 
 WORKDIR /
 
-EXPOSE 3000
+EXPOSE 4000
 
 COPY package.json package-lock.json ./
 
-RUN npm install --silent
+RUN npm install
 
 COPY . ./
 
