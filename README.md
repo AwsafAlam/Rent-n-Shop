@@ -99,7 +99,13 @@ The plan is to slowly add more features and incrementally develop the full appli
 - Graphql subscriptions for notification on product buy/rent.
 - full dockerization and server deployment.
 
-Future Plans:
+### API Documentation
+
+Api documentation for server side...
+
+
+
+### Future Plans:
 
 - Product Recommendation
 - Related Categories
